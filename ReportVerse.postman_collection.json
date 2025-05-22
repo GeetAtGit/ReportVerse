@@ -1,0 +1,1117 @@
+{
+    "info": {
+        "_postman_id": "c5a8f0d5-1e5c-4e7b-b9c5-c6a5c7e8d9f0",
+        "name": "ReportVerse API",
+        "description": "Collection for testing the ReportVerse backend API endpoints",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Authentication",
+            "item": [
+                {
+                    "name": "Register Mentor (TEMPORARY)",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.token) {",
+                                    "    pm.environment.set(\"mentorToken\", jsonData.token);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"mentor@example.com\",\n    \"password\": \"password123\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/auth/register/mentor",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "auth",
+                                "register",
+                                "mentor"
+                            ]
+                        },
+                        "description": "Register a new mentor account (temporary endpoint for development)"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Login (Mentor)",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.token) {",
+                                    "    pm.environment.set(\"mentorToken\", jsonData.token);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"mentor@example.com\",\n    \"password\": \"password123\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/auth/login",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "auth",
+                                "login"
+                            ]
+                        },
+                        "description": "Login as a mentor user to get authentication token"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Login (Mentee)",
+                    "event": [
+                        {
+                            "listen": "test",
+                            "script": {
+                                "exec": [
+                                    "var jsonData = pm.response.json();",
+                                    "if (jsonData.token) {",
+                                    "    pm.environment.set(\"menteeToken\", jsonData.token);",
+                                    "}"
+                                ],
+                                "type": "text/javascript"
+                            }
+                        }
+                    ],
+                    "request": {
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"mentee@example.com\",\n    \"password\": \"password123\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/auth/login",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "auth",
+                                "login"
+                            ]
+                        },
+                        "description": "Login as a mentee user to get authentication token"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Register Mentee (Mentor Only)",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{mentorToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "POST",
+                        "header": [],
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{\n    \"email\": \"new.mentee@example.com\",\n    \"password\": \"password123\"\n}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        },
+                        "url": {
+                            "raw": "{{baseUrl}}/api/auth/register/mentee",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "auth",
+                                "register",
+                                "mentee"
+                            ]
+                        },
+                        "description": "Register a new mentee (accessible only to mentors)"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Current User (Mentor)",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{mentorToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/auth/me",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "auth",
+                                "me"
+                            ]
+                        },
+                        "description": "Get current mentor user details"
+                    },
+                    "response": []
+                },
+                {
+                    "name": "Get Current User (Mentee)",
+                    "request": {
+                        "auth": {
+                            "type": "bearer",
+                            "bearer": [
+                                {
+                                    "key": "token",
+                                    "value": "{{menteeToken}}",
+                                    "type": "string"
+                                }
+                            ]
+                        },
+                        "method": "GET",
+                        "header": [],
+                        "url": {
+                            "raw": "{{baseUrl}}/api/auth/me",
+                            "host": [
+                                "{{baseUrl}}"
+                            ],
+                            "path": [
+                                "api",
+                                "auth",
+                                "me"
+                            ]
+                        },
+                        "description": "Get current mentee user details"
+                    },
+                    "response": []
+                }
+            ],
+            "description": "Authentication endpoints for login and user management"
+        },
+        {
+            "name": "Mentee Routes",
+            "item": [
+                {
+                    "name": "Profile",
+                    "item": [
+                        {
+                            "name": "Create Profile",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{menteeToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"name\": \"John Doe\",\n    \"registrationNo\": \"REG12345\",\n    \"section\": \"A\",\n    \"rollNo\": \"CSE123\",\n    \"branch\": \"Computer Science\",\n    \"mobileNo\": \"9876543210\",\n    \"hostelBlockNo\": \"H5\",\n    \"roomNo\": \"205\",\n    \"bloodGroup\": \"O+\",\n    \"dob\": \"2000-05-15\",\n    \"alumniFamily\": {\n        \"status\": true,\n        \"details\": \"Father, 1995 batch, CSE\"\n    },\n    \"fatherDetails\": {\n        \"name\": \"Robert Doe\",\n        \"occupation\": \"Professional\",\n        \"organizationDesignation\": \"Senior Engineer, TechCorp\",\n        \"mobileNo\": \"9876543211\",\n        \"emailId\": \"robert@example.com\"\n    },\n    \"motherDetails\": {\n        \"name\": \"Mary Doe\",\n        \"occupation\": \"Public Sector\",\n        \"organizationDesignation\": \"Manager, State Bank\",\n        \"mobileNo\": \"9876543212\",\n        \"emailId\": \"mary@example.com\"\n    },\n    \"communicationAddress\": {\n        \"address\": \"123 College Avenue, Tech City\",\n        \"pinCode\": \"500001\"\n    },\n    \"permanentAddress\": {\n        \"address\": \"456 Home Street, Home City\",\n        \"pinCode\": \"600001\"\n    }\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentee/profile",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentee",
+                                        "profile"
+                                    ]
+                                },
+                                "description": "Create a new profile for the mentee"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Update Profile",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{menteeToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "PUT",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"mobileNo\": \"9876543219\",\n    \"hostelBlockNo\": \"H6\",\n    \"roomNo\": \"305\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentee/profile",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentee",
+                                        "profile"
+                                    ]
+                                },
+                                "description": "Update existing profile for the mentee"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Get Profile",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{menteeToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentee/profile",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentee",
+                                        "profile"
+                                    ]
+                                },
+                                "description": "Get mentee's profile details"
+                            },
+                            "response": []
+                        }
+                    ],
+                    "description": "Endpoints for mentee profile management"
+                },
+                {
+                    "name": "Issues",
+                    "item": [
+                        {
+                            "name": "Create Issue",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{menteeToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"issueType\": \"Academic\",\n    \"description\": \"Having difficulty understanding the Data Structures course content. Need guidance on complex topics.\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentee/issues",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentee",
+                                        "issues"
+                                    ]
+                                },
+                                "description": "Report a new issue"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Get All Issues",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{menteeToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentee/issues",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentee",
+                                        "issues"
+                                    ]
+                                },
+                                "description": "Get all issues reported by the mentee"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Get Issue by ID",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{menteeToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentee/issues/:issueId",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentee",
+                                        "issues",
+                                        ":issueId"
+                                    ],
+                                    "variable": [
+                                        {
+                                            "key": "issueId",
+                                            "value": "60d5e8b7a2b49c001f3e5d7e",
+                                            "description": "ID of the issue to retrieve"
+                                        }
+                                    ]
+                                },
+                                "description": "Get details of a specific issue"
+                            },
+                            "response": []
+                        }
+                    ],
+                    "description": "Endpoints for mentee issue management"
+                },
+                {
+                    "name": "Academics",
+                    "item": [
+                        {
+                            "name": "Update Academic Records",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{menteeToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"semesterGPA\": {\n        \"semester\": 1,\n        \"gpa\": 8.7\n    },\n    \"moocCourses\": [\"Machine Learning - Coursera\", \"Web Development - Udemy\"],\n    \"certifications\": [\"AWS Certified Developer\"]\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentee/academics",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentee",
+                                        "academics"
+                                    ]
+                                },
+                                "description": "Add or update academic details"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Get Academic Records",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{menteeToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentee/academics",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentee",
+                                        "academics"
+                                    ]
+                                },
+                                "description": "Get mentee's academic details"
+                            },
+                            "response": []
+                        }
+                    ],
+                    "description": "Endpoints for mentee academic record management"
+                },
+                {
+                    "name": "Achievements",
+                    "item": [
+                        {
+                            "name": "Create Achievement",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{menteeToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"type\": \"Hackathon\",\n    \"position\": \"Winner\",\n    \"description\": \"Won first place in the college hackathon for developing an innovative healthcare application.\",\n    \"dateOfAchievement\": \"2023-03-15\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentee/achievements",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentee",
+                                        "achievements"
+                                    ]
+                                },
+                                "description": "Report a new achievement"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Get All Achievements",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{menteeToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentee/achievements",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentee",
+                                        "achievements"
+                                    ]
+                                },
+                                "description": "Get all achievements reported by the mentee"
+                            },
+                            "response": []
+                        }
+                    ],
+                    "description": "Endpoints for mentee achievement management"
+                },
+                {
+                    "name": "Dashboard",
+                    "item": [
+                        {
+                            "name": "Get Dashboard Data",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{menteeToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentee/dashboard",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentee",
+                                        "dashboard"
+                                    ]
+                                },
+                                "description": "Get dashboard overview data for mentee"
+                            },
+                            "response": []
+                        }
+                    ],
+                    "description": "Endpoints for mentee dashboard"
+                }
+            ],
+            "description": "Endpoints accessible to mentee users"
+        },
+        {
+            "name": "Mentor Routes",
+            "item": [
+                {
+                    "name": "Mentees",
+                    "item": [
+                        {
+                            "name": "Get All Mentees",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{mentorToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentor/mentees",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentor",
+                                        "mentees"
+                                    ]
+                                },
+                                "description": "Get a list of all mentees assigned to the mentor"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Get Mentee Profile",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{mentorToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentor/mentees/:menteeId/profile",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentor",
+                                        "mentees",
+                                        ":menteeId",
+                                        "profile"
+                                    ],
+                                    "variable": [
+                                        {
+                                            "key": "menteeId",
+                                            "value": "60d5e8b7a2b49c001f3e5d7e",
+                                            "description": "ID of the mentee"
+                                        }
+                                    ]
+                                },
+                                "description": "Get the profile details of a specific mentee"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Get Mentee Academics",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{mentorToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentor/mentees/:menteeId/academics",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentor",
+                                        "mentees",
+                                        ":menteeId",
+                                        "academics"
+                                    ],
+                                    "variable": [
+                                        {
+                                            "key": "menteeId",
+                                            "value": "60d5e8b7a2b49c001f3e5d7e",
+                                            "description": "ID of the mentee"
+                                        }
+                                    ]
+                                },
+                                "description": "Get the academic details of a specific mentee"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Get Mentee Achievements",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{mentorToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentor/mentees/:menteeId/achievements",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentor",
+                                        "mentees",
+                                        ":menteeId",
+                                        "achievements"
+                                    ],
+                                    "variable": [
+                                        {
+                                            "key": "menteeId",
+                                            "value": "60d5e8b7a2b49c001f3e5d7e",
+                                            "description": "ID of the mentee"
+                                        }
+                                    ]
+                                },
+                                "description": "Get all achievements of a specific mentee"
+                            },
+                            "response": []
+                        }
+                    ],
+                    "description": "Endpoints for managing mentees"
+                },
+                {
+                    "name": "Issues",
+                    "item": [
+                        {
+                            "name": "Get All Issues",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{mentorToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentor/issues",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentor",
+                                        "issues"
+                                    ]
+                                },
+                                "description": "Get all issues reported by assigned mentees"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Get Issue by ID",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{mentorToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentor/issues/:issueId",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentor",
+                                        "issues",
+                                        ":issueId"
+                                    ],
+                                    "variable": [
+                                        {
+                                            "key": "issueId",
+                                            "value": "60d5e8b7a2b49c001f3e5d7e",
+                                            "description": "ID of the issue"
+                                        }
+                                    ]
+                                },
+                                "description": "Get details of a specific issue"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Add Comment to Issue",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{mentorToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "POST",
+                                "header": [],
+                                "body": {
+                                    "mode": "raw",
+                                    "raw": "{\n    \"text\": \"I recommend you go through the additional resources I've shared. Let's schedule a meeting to discuss these topics.\",\n    \"status\": \"Under Review\"\n}",
+                                    "options": {
+                                        "raw": {
+                                            "language": "json"
+                                        }
+                                    }
+                                },
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentor/issues/:issueId/comment",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentor",
+                                        "issues",
+                                        ":issueId",
+                                        "comment"
+                                    ],
+                                    "variable": [
+                                        {
+                                            "key": "issueId",
+                                            "value": "60d5e8b7a2b49c001f3e5d7e",
+                                            "description": "ID of the issue"
+                                        }
+                                    ]
+                                },
+                                "description": "Add a comment to an issue and optionally update its status"
+                            },
+                            "response": []
+                        }
+                    ],
+                    "description": "Endpoints for managing issues reported by mentees"
+                },
+                {
+                    "name": "Achievements",
+                    "item": [
+                        {
+                            "name": "Get All Achievements",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{mentorToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentor/achievements",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentor",
+                                        "achievements"
+                                    ]
+                                },
+                                "description": "Get all achievements reported by assigned mentees"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Filter Achievements by Type",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{mentorToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentor/achievements?type=Hackathon",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentor",
+                                        "achievements"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "type",
+                                            "value": "Hackathon"
+                                        }
+                                    ]
+                                },
+                                "description": "Filter achievements by type"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Filter Achievements by Position",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{mentorToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentor/achievements?position=Winner",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentor",
+                                        "achievements"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "position",
+                                            "value": "Winner"
+                                        }
+                                    ]
+                                },
+                                "description": "Filter achievements by position"
+                            },
+                            "response": []
+                        },
+                        {
+                            "name": "Sort Achievements",
+                            "request": {
+                                "auth": {
+                                    "type": "bearer",
+                                    "bearer": [
+                                        {
+                                            "key": "token",
+                                            "value": "{{mentorToken}}",
+                                            "type": "string"
+                                        }
+                                    ]
+                                },
+                                "method": "GET",
+                                "header": [],
+                                "url": {
+                                    "raw": "{{baseUrl}}/api/mentor/achievements?sort=dateOfAchievement",
+                                    "host": [
+                                        "{{baseUrl}}"
+                                    ],
+                                    "path": [
+                                        "api",
+                                        "mentor",
+                                        "achievements"
+                                    ],
+                                    "query": [
+                                        {
+                                            "key": "sort",
+                                            "value": "dateOfAchievement"
+                                        }
+                                    ]
+                                },
+                                "description": "Sort achievements by date (ascending order)"
+                            },
+                            "response": []
+                        }
+                    ],
+                    "description": "Endpoints for managing achievements reported by mentees"
+                }
+            ],
+            "description": "Endpoints accessible to mentor users"
+        }
+    ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    ""
+                ]
+            }
+        }
+    ],
+    "variable": [
+        {
+            "key": "baseUrl",
+            "value": "http://localhost:5000",
+            "type": "string"
+        }
+    ]
+}
